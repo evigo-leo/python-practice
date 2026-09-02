@@ -16,10 +16,7 @@ def find_anomalous_words(text: str) -> list[str]:
         return []
 
     words_list = [word.strip(string.punctuation) for word in text.split()]
-    sum_len = 0
-    for word in words_list:
-        sum_len += len(word)
-    avg_len = sum_len / len(words_list)
+    avg_len = sum([len(word) for word in words_list]) / len(words_list)
 
     anomal_words_list = []
     for word in words_list:
