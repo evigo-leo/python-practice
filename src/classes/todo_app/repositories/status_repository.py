@@ -1,6 +1,7 @@
 """
 Status repo module
 """
+import os
 from src.classes.todo_app.models.status import Status
 from src.classes.todo_app.repositories.base_repository import BaseRepository
 
@@ -22,8 +23,8 @@ class StatusRepository(BaseRepository[Status]):
 
         for status in default_statuses:
             self._data[status.id] = status
-
-        self._save()
+        
+        #self._save()
 
     def is_valid_status(self, status_id: int) -> bool:
         """Check a status valid"""
