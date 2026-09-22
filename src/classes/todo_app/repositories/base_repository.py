@@ -21,12 +21,12 @@ class DateTimeEncoder(JSONEncoder):
 class BaseRepository[T: BaseModel]:
     """The base class for repo"""
     def __init__(self, file_path: str, model: type[T]):
-        self._file_path: str = os.path.join(file_path)
+        self._file_path: str = file_path
         self._model: T = model
         self._data: dict[int, T] = {}
 
-        # Загружаем существующие данные, если файл уже есть
-        if os.path.exists(self._file_path):
+        # Загружаем существующие данные, если файл (не директория) уже есть
+        if os.path.isfile(self._file_path):
             self._load()
 
     def _load(self) -> None:
@@ -51,10 +51,10 @@ class BaseRepository[T: BaseModel]:
             for k, v in self._data.items()
         }
 
-        # Создаем директорию, если она еще не создана
-        dir_name = os.path.dirname(self._file_path)
-        if dir_name:
-            os.makedirs(dir_name, exist_ok=True)
+        # # Создаем директорию, если она еще не создана
+        # dir_name = os.path.dirname(self._file_path)
+        # if dir_name:
+        #     os.makedirs(dir_name, exist_ok=True)
 
         with open(self._file_path, "w", encoding="utf-8") as f:
             json.dump(serialized_data, f, cls=DateTimeEncoder)
