@@ -1,4 +1,5 @@
-def pack_boxes(items, limit):
+"""Packaging into boxes"""
+def pack_boxes(items: list[int], limit: int) -> list[list[int]]:
     """
     Упаковывает предметы в коробки, не превышая лимит веса.
     Предметы упаковываются в порядке следования.
@@ -17,5 +18,19 @@ def pack_boxes(items, limit):
     :param limit: Максимальный вес коробки
     :return: Список коробок (список списков)
     """
-    # TODO: Реализуйте функцию
-    pass
+    if not items or not limit:
+        return []
+
+    sorted_items, box = [], []
+    for i in items:
+        if i <= limit and sum(box) + i <= limit:
+            box.append(i)
+        elif i > limit:
+            continue
+        else:
+            sorted_items.append(box)
+            box = [i]
+
+    if box:
+        sorted_items.append(box)
+    return sorted_items
