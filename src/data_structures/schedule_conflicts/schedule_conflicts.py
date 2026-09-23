@@ -1,7 +1,7 @@
 """Interval conflicts"""
 from datetime import datetime
 
-def find_schedule_conflicts(intervals):
+def find_schedule_conflicts(intervals: list[tuple]) -> list[tuple[tuple]]:
     """
     Находит все конфликтующие пары интервалов времени, включая интервалы через полночь.
     
@@ -11,7 +11,7 @@ def find_schedule_conflicts(intervals):
     Возвращает:
         Список кортежей конфликтующих пар интервалов [(interval1, interval2), ...]
     """
-    def to_datetime(time: str, mask="%H:%M"):
+    def to_datetime(time: str, mask: str = "%H:%M"):
         """Convert time string to datetime"""
         return datetime.strptime(time, mask)
 
