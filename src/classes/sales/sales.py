@@ -51,20 +51,20 @@ class SalesAnalyzer:
         """
         new_products = {}
         for product in self.products:
-            new_products[product["id"]] = (product["name"], product["price"])
+            new_products[product.id] = (product.name, product.price)
 
         new_customers = {}
         for cust in self.customers:
-            new_customers[cust['id']] = cust["name"]
+            new_customers[cust.id] = cust.name
 
         sold_products = []
         customer_checks = defaultdict(list)
         for order in self.orders:
-            sold_products += [new_products[prod][0] for prod in order["product_ids"]]
+            sold_products += [new_products[prod][0] for prod in order.product_ids]
             # Цены позиций в одном заказе
-            prices_in_check = [new_products[prod][1] for prod in order["product_ids"]]
+            prices_in_check = [new_products[prod][1] for prod in order.product_ids]
             # Сумма чека покупателя
-            customer_checks[new_customers[order["customer_id"]]].append(sum(prices_in_check))
+            customer_checks[new_customers[order.customer_id]].append(sum(prices_in_check))
 
         # Сколько куплено товаров
         cnt_products = Counter(sold_products)
@@ -107,13 +107,16 @@ def load_data(products_path: str,
     base_dir = Path(__file__).resolve().parent
 
     with open(base_dir / products_path, 'r', encoding='utf-8') as p:
-        products = json.load(p)
+        products_json = json.load(p)
+        products = [Product.model_validate(p) for p in products_json]
 
     with open(base_dir / customers_path, 'r', encoding='utf-8') as c:
-        customers = json.load(c)
+        customers_json = json.load(c)
+        customers = [Customer.model_validate(p) for p in customers_json]
 
     with open(base_dir / orders_path, 'r', encoding='utf-8') as o:
-        orders = json.load(o)
+        orders_json = json.load(o)
+        orders = [Order.model_validate(p) for p in orders_json]
 
     return SalesAnalyzer(products, customers, orders)
 
