@@ -13,7 +13,7 @@ def find_most_expensive_weapons(
     """
     max_price = 0
     weapons_prices = {}
-    
+
     # Проходимся по всем видам оружия
     for weapon in blueprints:
         flag = False
