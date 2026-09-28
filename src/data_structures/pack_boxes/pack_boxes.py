@@ -22,14 +22,17 @@ def pack_boxes(items: list[int], limit: int) -> list[list[int]]:
         return []
 
     sorted_items, box = [], []
+    current_weight = 0
     for i in items:
-        if i <= limit and sum(box) + i <= limit:
+        if i <= limit and current_weight + i <= limit:
             box.append(i)
+            current_weight += i
         elif i > limit:
             continue
         else:
             sorted_items.append(box)
             box = [i]
+            current_weight = i
 
     if box:
         sorted_items.append(box)
