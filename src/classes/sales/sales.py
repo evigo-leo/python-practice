@@ -1,5 +1,5 @@
 """
-Sales analizer modul
+Sales analizer module
 """
 import json
 from collections import Counter, defaultdict
