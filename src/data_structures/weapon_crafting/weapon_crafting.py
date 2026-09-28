@@ -13,10 +13,10 @@ def find_most_expensive_weapons(
     """
     max_price = 0
     weapons_prices = {}
-    flag = False
-
+    
     # Проходимся по всем видам оружия
     for weapon in blueprints:
+        flag = False
         materials = blueprints.get(weapon)["materials"] # материалы для конкретного оружия
         price = blueprints.get(weapon)["price"]         # цена конкретного оружия
         # Проходимся по материалам для конкретного оружия и сравниваем с инвентарными запасами
